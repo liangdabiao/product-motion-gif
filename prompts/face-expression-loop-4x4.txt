@@ -1,0 +1,93 @@
+TASK
+Build a 4x4 sprite sheet (16 cells, read left to right, top to bottom) showing ONE single face
+performing one continuous run of exaggerated expressions. The sheet is built FROM the supplied
+reference photo: the person in that photo is the subject, and every cell must read as the same
+person seen by the same camera.
+- STYLE: <<< keep the reference's own rendering, named explicitly so it does not drift:
+      "flat faceted low-poly portrait, hard edges between facets, no skin texture, no soft
+      airbrush shading" / "clean anime cel-shading with a hard outline" / "photographic
+      portrait, natural skin" / "16-bit pixel art portrait". State the facet/line/noise size
+      stays the same in every cell. >>>
+- SUBJECT: <<< one line naming the single person by their fixed, visible features only -
+      hair length and parting, face shape, garment and collar. Never a real person's name and
+      never a brand. >>>
+- ACTION: <<< the expression journey in one sentence, e.g. "his face travels from a neutral
+      look into X, snaps wide into Y, bursts into Z, then unwinds back to neutral" >>>
+
+SUBJECT - the one and only face (named before anything else)
+- Exactly one person, head and shoulders, cropped at <<< mid-chest / collarbone / chin >>>
+  placed in the centre of the frame with a small even margin on all sides. The crop, the head
+  size and the position of the face are identical in all 16 cells.
+- <<< which way he faces and at what head angle, e.g. "straight on, head level, eyes to
+      camera" >>>. The head is never turned, never tilted, never raised and never lowered in
+  any cell.
+
+CAMERA - LOCKED
+- The camera does not move at all: no orbit, no turn, no zoom, no dolly, no pan, no tilt, no
+  roll, no change of framing. Fixed distance, fixed height, fixed crop, fixed background.
+- The face never slides sideways, never grows, never shrinks and is never re-framed. Nothing
+  in the picture changes except the expression on it.
+<<< Note for the operator: this is the strictest lock of all four families. A face reads
+translation far more sensitively than a full body does - half a percent of lateral drift is
+enough to look like the head is bobbing, so the "never re-framed" line is doing real work here.
+Do NOT reuse this file for full-body actions; that is char-action-fixed-4x4.txt. >>>
+
+LOOK
+- Background: <<< a flat, seamless, pure black field / the reference's own plain background >>>
+  filling the whole cell, identical in all 16 cells. No scenery, no vignette, no glow, no
+  texture, no gradient.
+- <<< the exact lighting, e.g. "one soft key light from the upper left and one gentle fill from
+      the right, as in the reference" >>>. Its direction, intensity and colour temperature
+  never change between cells.
+- The clothing stays literally the same garment, with the same folds, the same collar and the
+  same fastenings in every cell.
+
+THE EXPRESSION ARC - one continuous run, 16 equal samples
+- The 16 cells are 16 samples of ONE unbroken performance. No two cells show the same face, no
+  expression is held frozen across two cells, and the face never snaps instantly from one
+  extreme to another.
+- The performance: <<< the journey, as ONE arc. Unlike the motion templates this one is
+  allowed to name beats - expressions are discrete states, not a continuous quantity, so the
+  hard-rule-5 ban on staged lists does not apply. What still matters is that the joins are
+  written as blends, never as a cut. >>> Play it as broad mugging comedy - pushed hard, never
+  subtle.
+- ANCHORS (milestones, each one is just a single cell you can describe in words):
+  - Cell 1: <<< the opening expression, described muscle by muscle - brows, eyelids, mouth
+    corners, jaw. Starting and ending on a near-neutral face is what makes the loop seam
+    invisible. >>>
+  - Cell 5: <<< the first peak, e.g. "the smirk at full strength - the corner of the mouth on
+    the viewer's left pulled up high while the other corner pulls slightly down, one eyebrow
+    cocked high and the other low, one eye narrowed to a slit, nose wing flared" >>>
+  - Cell 9: <<< the second peak. Assign every asymmetric feature an explicit side; "a crooked
+    smile" without a side gets mirrored at random from cell to cell. >>>
+  - Cell 12: <<< the strongest peak >>>
+  - Cell 16: back at the cell-1 expression - this is the loop seam, so that a plain cycle loop
+    reads seamless.
+- Push the exaggeration to cartoon level: <<< which features carry the exaggeration and how
+  far - "brows travel a long way, eyes go from slits to full circles, the mouth opens far
+  beyond any natural smile, cheeks and nose wings deform" >>>. Push the shapes hard while the
+  person stays themselves.
+
+WHAT MAY CHANGE / WHAT MUST NOT
+- MAY change: eyebrows, eyelids, eyes and gaze, nose wings, mouth, cheeks, chin and jaw opening.
+- MUST NOT change: the identity, the face structure, the facial proportions, the jaw line, the
+  cheekbones, the hair length and hair silhouette, the ear shape, the neck, and every garment.
+  No ageing, no beautifying, no skin smoothing, no change of ethnicity, no added glasses,
+  beard, hat or makeup, no tears, no sweat drops, no cartoon symbols.
+- No second face, no second head, no figure in the background, no shadow of another person.
+- No motion lines, no speed lines, no colour flashes, no radial burst behind the head.
+
+FAILURE
+(a) A sheet in which the face carries the same expression in all 16 cells is a FAILED sheet.
+(b) A sheet in which the person is not recognisably the same person in all 16 cells is also a
+    FAILED sheet.
+
+OUTPUT
+- 4 columns, 4 rows, equal cells, no visible grid lines and no gaps between cells.
+- No borders, frames, panels, captions, text, numbers, watermarks or logos.
+- Each cell is a finished frame of the same single shot; the hair and the shoulders fit inside
+  their cell with a small even margin and are never cut off by the cell edge.
+
+---
+Operator notes - fill-in guide and gotchas live in face-expression-loop-4x4.notes.md.
+Everything below this line is stripped by apiz_image.py and never sent to the model.

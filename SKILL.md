@@ -1,6 +1,6 @@
 ---
 name: product-motion-gif
-description: 把一张（或多张）产品图/场景图变成可循环的动图。原理是让 GPT-Image 2.5 一次性生成 4x4 多格帧图，再切帧、修循环缝、按节奏合成 GIF/WebP/MP4。适用于电商主图、详情页、投放素材的产品环绕/悬浮动效。默认动效为「左→右 60° 相机环绕 + 前慢后快节奏」，可选叠加推近/拉远或让场景内一个小角色动一下。触发词：产品动图、产品 GIF、环绕动图、旋转动图、多格图、frame sheet、turntable gif、product animation、让图动起来。
+description: 把一张产品图/场景图/人像图变成可循环的动图。原理是让 GPT-Image 2.5 一次性生成 4x4 多格帧图，再切帧、修循环缝、按节奏合成 GIF/WebP/MP4。四类动效：A 相机环绕（默认「左→右 60°」）、B 相机锁死+角色自己做动作（可无参考图从零画游戏人物招式）、C 相机锁死+背景后掠的速度型动作、D 机位锁死+只变表情（人像表情包）。触发词：产品动图、产品 GIF、环绕动图、旋转动图、多格图、frame sheet、turntable gif、product animation、动作 GIF、游戏人物 GIF、角色动图、表情包、表情 GIF、夸张表情、让图动起来。
 agent_created: true
 ---
 
@@ -13,22 +13,50 @@ agent_created: true
 
 - 用户给产品图或场景图，要"动起来"的展示素材（环绕、旋转、悬浮）。
 - 用户**不给参考图**，只说"生成一个 XX 在做 XX 的动图"（角色招式 / 游戏人物动作）——
-  `apiz_image.py` 的 `--ref` 是可选的，**纯文本生成也支持**（见下"两类动效"）。
+  `apiz_image.py` 的 `--ref` 是可选的，**纯文本生成也支持**（见下"四类动效"）。
+- 用户给**人像/人脸图**，要做"表情包"（同一个人做一整套夸张表情，如"周星驰那种夸张"）
+  —— 用 D 类模板 `prompts/face-expression-loop-4x4.txt`，参见"四类动效"。
 - 输出目标：微信/详情页可用的 GIF、现代平台用的 WebP、投放用的 MP4。
 
 **不适合**：多主体互动、复杂剧情动作、刁钻运镜、需要 48 帧以上的长动画。
 
-## 两类动效，别抄错对方的写法
+## 四类动效，别抄错对方的写法
 
-| | A. 相机绕场景（orbit 系列） | B. 相机锁死、角色做动作（`char-action-fixed-4x4.txt`） |
-|---|---|---|
-| 参考图 | 必须给 | **不用给**，从零画 |
-| 相机 | 绕主体扫 60° | **完全不动**（no orbit / zoom / dolly / pan） |
-| 背景 | **必须横移**——转动的唯一线索（硬规则 17） | **纹丝不动** |
-| 主体 | 居中不动，转动由背景承载 | 居中，**动作全在它身上** |
-| 循环 | `--loop pingpong`（硬规则 3） | `--loop cycle`，cell 16 收回起手式闭环 |
+| | A. 相机绕场景（orbit 系列） | B. 相机锁死、角色做动作（`char-action-fixed-4x4.txt`） | C. 相机锁死、背景后掠、角色做动作（`char-action-scroll`，**待固化**） | D. 机位锁死、只变表情（`face-expression-loop-4x4.txt`） |
+|---|---|---|---|---|
+| 参考图 | 必须给 | **不用给**，从零画 | **不用给**，从零画 | **必须给**——脸就是身份 |
+| 相机 | 绕主体扫 60° | **完全不动**（no orbit / zoom / dolly / pan） | **完全不动** | **完全不动，且锁得最死** |
+| 背景 | **必须横移**——转动的唯一线索（硬规则 17） | **纹丝不动** | **必须向后掠**——速度感的唯一来源（近快远慢视差） | 纹丝不动（纯黑底最稳） |
+| 主体 | 居中不动，转动由背景承载 | 居中，**动作全在它身上** | 居中，动作在它身上，**它不横穿画面** | 一张脸（头肩），居中等大，**只有面部肌肉在变** |
+| 循环 | `--loop pingpong`（硬规则 3） | `--loop cycle`，cell 16 收回起手式闭环 | `--loop cycle`，整圈动作（如空翻 360°）首尾同姿 | `--loop cycle`，cell 16 收回 cell 1 的中性脸 |
+| 适用 | 产品/场景展示 | 招式、技能、站立动作 | 飞行、奔跑、冲刺这类**有速度**的动作 | 表情包、面部情绪演出 |
 
-**A 的"背景必须横移"照抄进 B 会把平涂底搅花**，B 的"相机锁死"照抄进 A 会让画面转不起来。
+**A 的"背景必须横移"照抄进 B 会把平涂底搅花**；**B 的"背景纹丝不动"照抄进 C 就没有速度感**；
+**C 的"背景后掠"照抄进 A 会让环绕读成推轨**；**把 B/C 的全身动作写法抄进 D 会让脸在画面里乱跑。**
+
+D 类三条专属写法（照抄自模板，别删）：
+
+1. **机位锁得比 B/C 更死。** 脸对**平移**的敏感度远高于全身——全身横移 1% 看不出来，
+   脸横移 1% 就已经像在点头晃脑。所以模板里那句 *"nothing in the picture changes except the
+   expression on it"* 是核心约束。
+2. **允许点名"节拍"，但接缝要写成过渡。** 硬规则 5 禁止分段描述是针对**连续量**（角度、位移）
+   的；**表情是离散状态**（中性 / 坏笑 / 震惊 / 大笑），本来就该分节拍。写法：节拍只落在
+   具体格号的 ANCHORS 上（cell 1 / 5 / 9 / 12 / 16），并加一句
+   *"the face never snaps instantly from one extreme to another"*。
+3. **所有不对称特征必须显式给方位，且统一用观众视角。** 只写 "a crooked smile" 不写左右，
+   模型会**逐格随机镜像**，观感就是脸在抖。用 `the corner of the mouth on the viewer's left`，
+   不要用 `his left`（模型常算反）。
+
+D 类首个实例：**m1.jpg 低多边形人像做夸张表情包**（中性→挑眉坏笑→瞪眼震惊→咧嘴大笑→回中性），
+2K / 3:4（单格 384×512）/ Flare，prompt 5305 字符 → `D:/image25/gif-lab/out/face-expr/`。
+**尚未经用户验收**，暂不并入硬规则。
+
+C 类提示语要点：把"角速度"写成可数的整数步（如 `15 equal steps of 24 degrees` = 整圈 360°），
+并明写"背景每格后掠相同的量、近处比远处走得远"；同时保留 B 类的身份锁与人口线。
+
+C 类首个实例：**孙行者翻筋斗云飞速前进**（任天堂 3D 卡通渲染 + 蓝天绿丘后掠 + 完整前空翻），
+prompt 5975 字符 → `D:/image25/gif-lab/out/monkeyking/`。**尚未经用户验收**。
+
 
 
 稳定性最好的区间是「**纯色 / 影棚背景 + 单主体 + 简单动作**」。**平涂底的全出血插画**
@@ -92,6 +120,47 @@ agent_created: true
 → 想再大只能改网格（3×3 → 2K 下单格 682px），代价是帧数变少、流畅度下降。
 → 跨版本比清晰度用 `scripts/compare_clear.py`（同格归一化到同一显示尺寸 + 2x 局部放大），
   别凭感觉说"更清晰了"。
+
+## 透明底 + 像素风：五条链路硬约束（已实测）
+
+这一节的每一条都是踩出来的，不是猜的。
+
+**一、透明底走 `--transparency`，返回的是 PNG。**
+`apiz_image.py --transparency` → `params.transparency = true`，实测返回 `content_type: image/png`，
+带 alpha 通道。`make_gif.py --bg transparent` 配合使用（`--bg auto` 也会自动识别出 alpha）。
+
+**二、模型给的 alpha 是"柔边"的，而 GIF 只有 1-bit 透明。**
+实测一张透明底像素图：alpha 有 **255 种取值**，`alpha == 0` 占 **50.7%**，
+其余从 1 连续过渡到 254，**没有任何一个像素是 255**。
+`giflab.quantize_frames` 用 `> 128` 阈值二值化，后果是：
+- 轮廓上 1–2px 的羽化被切掉或补上 → 边缘变硬（像素画正合要求，无害）；
+- **"半透明残影 / 柔光拖尾"会被阈值化成实心色块**，观感是脏污而不是残影。
+→ 要干净的残影/拖尾，**必须在 prompt 里要求"用实心像素画残影，不许半透明"**。
+→ **WebP 支持真 alpha，是透明素材的正确载体，必须同时交付 WebP。**
+
+**三、像素风必须 `--resample nearest --no-dither`。**
+默认 LANCZOS 会把硬边糊掉；Floyd 抖动会在平色区撒噪点，并在透明轮廓上造出成片半透明像素。
+两个开关都是为像素风加的（`resize_all(resample=...)` / `quantize_frames(dither=...)`）。
+
+**四、`--size` 只能取"源单格长边"或它的整数分之一，否则像素块大小不均匀。**
+`resize_all` 按"长边 = `--size`"等比缩放。**用 NEAREST 做非整数倍缩放 = 像素块一大一小**
+（1px、2px、1px、2px…），这是像素画最显眼的硬伤。
+→ 2K 4:3 单格是 512×384，所以 `--size` 用 **512（不缩放）** 或 **128（精确 1/4）**。
+→ **坑**：`--trim union` 会**改变**帧尺寸（实测 512×384 裁成 **460×384**），
+  此时按 512 输出等于 NEAREST **放大 1.11 倍**，正好踩中上一条。
+  **像素风请用 `--trim none`**（顺带白送一个好处：16 格画框完全一致，对游戏素材是加分项），
+  或先看日志 `global crop ... -> WxH` 再定 `--size`。
+
+**五、透明底 + WebP(method=6) 很慢，别用前台跑；失败先查真实原因。**
+- 透明 512px × 16 帧导出 WebP 实测 **> 3 分钟**，前台默认 120s 超时会把它 SIGTERM 掉，
+  且**输出走管道是块缓冲的，日志全丢**——现象是"exit 1 / SIGTERM / 无任何输出"。
+  → 长任务一律 `run_in_background`；`python -u` 关缓冲看实时日志。
+- 透明素材**跳过 MP4**（`--no-mp4`）：`export_mp4` 把帧合成到白底，透明信息本就不存在。
+- apiz 生成失败时**别猜**：`apiz tasks get <task-id>` 能拿到 `result.error`。
+  实测一次失败的真实原因是
+  `Your request did not meet content safety guidelines. Your tokens have been credited back`
+  ——疑似被 `run-and-gun`（含 "gun"）触发，改成 `action platformer` 后同一份 prompt 一次通过。
+  **内容安全被拒不扣 points（已退回）**，可以直接改词重试。
 
 ## 标准流程
 
@@ -352,6 +421,13 @@ apiz upload ./product.jpg --folder myproj
   `140,209,253`，亮度天然只有 200）会 100% 误报，也会把"主体故意出画"误判成黑边。
   判定：`near_black_fraction > 2%` 才算真黑边。`mean_rgb` 是给人看的，用来确认外圈
   是不是背景色本身。
+  **例外（已实测）**：素材背景本身就是纯黑时（如 m1 人像表情包，背景是刻意的纯黑底），
+  `near_black_fraction` 会报到 **93.7%** 并给出 `verdict: REVIEW` +
+  `pure-black band on the canvas border ... the stabiliser filled with transparent`——
+  这是**预期值，不是黑边**（该条判据默认"外圈非黑才算正常"，黑底素材天然违反它）。
+  此时改看两点确认：`darkest_channel` ≈ 0 且 `mean_rgb` 就是设定背景色 → 忽略该 issue。
+  **注意 `--bg auto` 也会报同一类误判**：`auto` 从四角采样背景色，剪影式深色头发容易把
+  采样带偏、主体框跟着飘。**背景是纯黑/纯色时直接写死 `--bg 0,0,0`（或对应 RGB），不要用 auto。**
 - `area_cv` 超过 12% → 主体在"变形"而不只是"移动"，多半是多主体或复杂动作。
   （60° 环绕实测 **6%** 左右；180° 全环绕会到 50%+，属正常。）
   **例外**：prompt 里刻意要求 dolly（推近/拉远）时，`area_cv` 大是设计要求，不是缺陷
@@ -416,6 +492,17 @@ apiz upload ./product.jpg --folder myproj
   **效果尚未经用户验收**，暂不并入硬规则。
 - `prompts/char-action-fixed-4x4.notes.md` — 上者的填写说明（怎么指名角色、道具怎么当刚体
   写、动作为什么要写成"一条弧 + 三锚点"、为什么用 `cycle` 而不是 `pingpong`）。不进 prompt。
+- `prompts/face-expression-loop-4x4.txt` — **有参考图 / 机位锁死 / 只变表情**模板（D 类）：
+  头肩特写，用于表情包。含 `SUBJECT` / `CAMERA - LOCKED` / `LOOK` / `THE EXPRESSION ARC`
+  （5 个 ANCHORS）/ `WHAT MAY CHANGE / WHAT MUST NOT` / `FAILURE` 段与 `<<< >>>` 占位。
+  **本体 5917 字符**（贴近 6000 上限，填充后必须复测）。填写要点在
+  `face-expression-loop-4x4.notes.md`。**首个实例：m1.jpg 夸张表情包**，
+  3:4 / 2K / Flare，prompt 5305 字符 → `D:/image25/gif-lab/out/face-expr/`。
+  **效果尚未经用户验收**，暂不并入硬规则。
+- `prompts/face-expression-loop-4x4.notes.md` — 上者的填写说明：四类动效对照、
+  为什么 D 类机位要锁得最死、为什么 D 类**允许**分节拍（与硬规则 5 的关系）、
+  左右方位为什么必须用 `viewer's left`、以及两个必须记住的坑
+  （**`--trim` 必须用 `none`**、**黑底用 `--bg 0,0,0` 不要用 `auto`**）。不进 prompt。
 - `prompts/orbit60-l2r-4x4.txt` — **默认模板**：**左 30° → 右 30°**（60° 相机环绕，
   参考视角在表中间），见硬规则 1。含 `SUBJECT` 段（硬规则 16）、
   `HOW TO MAKE THE ORBIT VISIBLE` 四条（硬规则 10 / 17）、动作段（硬规则 15）的
@@ -432,5 +519,16 @@ apiz upload ./product.jpg --folder myproj
 - `prompts/orbit60-two-ref-4x4.txt` — 双参考图版（外观主视角 + 结构参考），见硬规则 9。
 - `prompts/turntable-180-4x4.txt` — 180° 环绕（单主体产品，历史版本）。
 - `prompts/orbit-reveal-180-16x9.txt` — 宽幅场景 180° 环绕 + 后拉揭示，16:9（历史版本）。
-- `README.md` — **面向非技术使用者的白话说明**（无命令、无参数），配示例动图
-  `README-demo.gif`。用户是要"发给朋友/同事看"的场合，给这份，不要给 SKILL.md。
+- `README.md` — **面向非技术使用者的白话说明**（无命令、无参数），第二节是**五类效果的
+  案例集**（A 环绕 / B 角色动作 / C 速度型 / C2 像素透明 / D 表情包），每类一张真实成品的
+  GIF + "你会提供什么 / 你可以这么说 / 适合什么"。用户是要"发给朋友/同事看"的场合，
+  给这份，不要给 SKILL.md。
+- `cases/` — README 案例集用的**成品动图**（约 7.5MB，纯展示用，不是素材）：
+  `A-orbit-60-l2r.gif`（218×320/30 帧，原 `README-demo.gif`）、
+  `B-character-action.gif`（640×480，唐僧锡杖聚气）、
+  `C-scroll-flight.gif`（640×480，孙行者翻筋斗云）、
+  `C2-arcade-transparent.gif` + `.webp`（512×384，街机像素透明底，webp 是真 alpha 版）、
+  `C2-arcade-pixel128.gif`（128×96 老街机颗粒）、
+  `D-expression-loop.gif`（180×240 表情包）。
+  **新增案例就往这里放并同步 README 第二节的表格**；A 类那张就是早期的 `README-demo.gif`，
+  不要在原位置重复放一份。

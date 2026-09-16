@@ -491,11 +491,18 @@ def ramp_durations(frames: list[Image.Image], base_ms: int,
     return [int(round(v / 10.0) * 10) for v in ms]
 
 
-def resize_all(frames: list[Image.Image], size: int) -> list[Image.Image]:
+def resize_all(frames: list[Image.Image], size: int,
+               resample: int = Image.LANCZOS) -> list[Image.Image]:
+    """Scale every frame so the long edge is ``size``.  ``resample`` defaults to LANCZOS,
+    which is right for photos/renders.  PIXEL-ART sheets must pass ``Image.NEAREST`` -
+    a smooth filter turns a hard-edged sprite grid into mush, and no amount of palette
+    work gets it back.  Best results on pixel art come from an integer scale factor;
+    pass the source long edge as ``size`` for no resampling at all.
+    """
     base = max(frames[0].size)
     sc = size / base
     return [f.resize((max(1, round(f.width * sc)), max(1, round(f.height * sc))),
-                     Image.LANCZOS) for f in frames]
+                     resample) for f in frames]
 
 
 def export_webp(frames: list[Image.Image], path: str, duration: int | list[int],

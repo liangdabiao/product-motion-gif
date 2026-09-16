@@ -112,6 +112,16 @@ def main():
     ap.add_argument("--loop", default="auto", choices=["auto", "none", "cycle", "pingpong",
                                                        "halfloop", "loopcut"])
     ap.add_argument("--colors", type=int, default=255)
+    ap.add_argument("--resample", default="lanczos", choices=["lanczos", "nearest"],
+                    help="lanczos (default) for photos and renders; NEAREST for PIXEL-ART "
+                         "sheets, where a smooth filter destroys the sprite grid. If you "
+                         "care about crisp pixels, also pass --size equal to the source "
+                         "long edge so nothing is resampled at all.")
+    ap.add_argument("--no-dither", dest="dither", action="store_false", default=True,
+                    help="turn off Floyd-Steinberg dithering during quantisation. Pixel art "
+                         "and flat-colour sprites read better without it - dithering sprays "
+                         "speckle across flat areas and, under transparent backgrounds, "
+                         "creates stray semi-opaque pixels along the silhouette.")
     ap.add_argument("--max-kb", type=int, default=3000,
                     help="auto-shrink GIF to fit this budget (0=off). 3000 = ~3 MB, the "
                          "accepted ceiling - shrinking below ~640px visibly softens the "
@@ -170,7 +180,8 @@ def main():
         print(f"loop: {args.loop} -> {used}  ({len(frames)} frames)")
 
     base = frames[0].size
-    scaled = G.resize_all(frames, args.size)
+    rs = Image.NEAREST if args.resample == "nearest" else Image.LANCZOS
+    scaled = G.resize_all(frames, args.size, resample=rs)
 
     if args.keep_frames:
         fdir = os.path.join(args.outdir, "frames")
@@ -208,8 +219,9 @@ def main():
         # honour --size verbatim.  Capping it at the source cell width (an earlier version
         # did `min(sz, max(base))`) silently pinned every GIF to the cell size and made the
         # GIF smaller than the WebP built from the same frames.
-        sub = G.resize_all(frames, sz)
-        pframes = G.quantize_frames(sub, cols, transparent, bg=bg_rgb)
+        sub = G.resize_all(frames, sz, resample=rs)
+        pframes = G.quantize_frames(sub, cols, transparent, bg=bg_rgb,
+                                    dither=args.dither)
         final_bytes = G.write_gif(pframes, gif_path, durations, transparent)
         used_cfg = (sz, cols)
         if not args.max_kb or final_bytes <= args.max_kb * 1024:
@@ -232,7 +244,8 @@ def main():
     report = qa_report(frames, stats, bg, args.loop, info)
     report["output"] = {"gif_kb": round(final_bytes / 1024),
                         "gif_size": used_cfg[0], "gif_colors": used_cfg[1],
-                        "frames": len(scaled), "duration_ms": args.duration}
+                        "frames": len(scaled), "duration_ms": args.duration,
+                        "resample": args.resample, "dither": args.dither}
     report["output"]["stabilize"] = args.stabilize
     if timing != "none":
         report["output"]["timing"] = timing
