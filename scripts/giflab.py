@@ -75,18 +75,25 @@ def bg_mask(im: Image.Image, bg: str = "auto", tol: float = 26.0) -> np.ndarray:
     bg = "auto"        -> background colour sampled from the four corners
     bg = "r,g,b"       -> explicit background colour
     """
-    a = np.asarray(im.convert("RGBA")).astype(np.int16)
-    rgb, alpha = a[..., :3], a[..., 3]
+    a = np.asarray(im.convert("RGBA"))
+    alpha = a[..., 3]
     if bg == "transparent":
         return alpha > 24
+    # float32 plus a per-channel accumulator.  The old form built a float64 (h, w, 3)
+    # temporary - ~12 MiB for a single 4K cell - and sixteen of those back to back is
+    # enough to OOM a machine that is already short on RAM.
+    rgb = a[..., :3].astype(np.float32)
     if bg == "auto":
         h, w = rgb.shape[:2]
         corners = np.stack([rgb[0, 0], rgb[0, w - 1], rgb[h - 1, 0], rgb[h - 1, w - 1]])
         ref = corners.mean(axis=0)
     else:
-        ref = np.array([float(c) for c in bg.split(",")])
-    dist = np.sqrt(((rgb - ref) ** 2).sum(axis=-1))
-    return (dist > tol) & (alpha > 24)
+        ref = np.array([float(c) for c in bg.split(",")], dtype=np.float32)
+    dist2 = np.zeros(rgb.shape[:2], dtype=np.float32)
+    for c in range(3):
+        d = rgb[..., c] - ref[c]
+        dist2 += d * d
+    return (dist2 > tol * tol) & (alpha > 24)
 
 
 def union_bbox(masks: list[np.ndarray], pad_ratio: float = 0.04) -> tuple[int, int, int, int]:

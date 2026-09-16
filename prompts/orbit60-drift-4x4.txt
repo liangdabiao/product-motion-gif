@@ -1,0 +1,82 @@
+TASK
+Turn the reference image into a 4x4 sprite sheet (16 cells, read left to right, top to
+bottom) of ONE continuous camera move: a horizontal camera orbit of exactly 60 degrees
+around the subject, travelling to the LEFT. The camera moves. The subject does not move.
+(For a right-hand orbit, swap "LEFT" for "RIGHT" and mirror the anchors in section 3.)
+
+REFERENCE
+<<< Replace this paragraph. Describe the subject in one dense paragraph: what it is, its
+colours and materials, every element that must survive into all 16 cells, and the
+background. Say "Same subject, same style, same colours, same brushwork in every cell."
+If the reference carries a watermark, note it here and forbid it in OUTPUT. >>>
+
+THE ONE THING THAT MATTERS MOST
+Across the 16 cells the viewpoint must travel a REAL 60 degrees, and the difference between
+cell 1 and cell 16 must be obvious at a glance. A sheet in which the subject is in the same
+orientation in every cell is a FAILED sheet. If you find yourself keeping the subject in the
+same place, at the same size, in the same part of the frame, you have not done the task.
+
+HOW TO MAKE THE ROTATION VISIBLE - all three are REQUIRED
+1. The subject must DRIFT across the frame. Cell 1 places it one way; by cell 16 it sits in
+   a different position in the frame, and it may run partly off the frame edge. That drift
+   is correct and required. Do NOT re-centre the subject from cell to cell, do NOT hold the
+   margins constant, and do NOT keep the same amount of empty space around it.
+2. The background must PARALLAX. Near elements sweep across the frame quickly, distant ones
+   barely move. Background elements must not stay nailed to the same positions.
+3. Use these three anchors - fill in what is actually revealed, and on which side:
+   - Cell 1 is exactly the viewpoint of the reference image.
+   - Cell 8 is about 28 degrees in: <<< which side starts opening toward the viewer, which
+     side rotates out of sight >>>
+   - Cell 16 is exactly 60 degrees in: the camera has moved 60 degrees to the LEFT, <<< which
+     shoulder / flank / face is now square-on, what has come into view, what is now hidden >>>
+
+CAMERA
+- Horizontal arc about the subject's vertical axis, always aimed at the subject, travelling
+  toward the LEFT.
+- CONSTANT distance, CONSTANT height, CONSTANT focal length. No dolly in or out, no zoom, no
+  rise, no drop, no tilt, no roll. The subject's apparent size varies by less than 5% across
+  the sheet: turn only, never move closer.
+- Cell 1 is 0 degrees. Cell 16 is exactly 60 degrees. The 60 degrees is divided into 15 equal
+  steps of 4 degrees, one step per cell.
+- The motion is even. Every step covers the same angle. No acceleration, no pause, no fast
+  section and no slow section.
+
+WHAT MUST NOT CHANGE
+- The subject's POSE is frozen: <<< list the pose-critical parts - limbs, head angle, held
+  objects, cloth shape >>>. The action does not advance and the subject does not turn to
+  face the camera.
+- This is NOT a turntable spin of the subject. Do not rotate the subject on its own axis.
+- Identical lighting, identical white balance and identical colour grading in all 16 cells.
+  No flicker, no colour drift, no brightness change.
+- The subject stays level with the ground / waterline.
+- Do not add or remove <<< the small parts that must survive - armour plates, tack, props >>>.
+
+OUTPUT
+- 4 columns, 4 rows, equal cells, no visible grid lines, no gaps between cells.
+- A continuous painted background across the whole sheet, with no banding or darkening at the
+  cell edges.
+- No borders, no text, no numbers, no watermarks, no captions, no logos, no signatures. If
+  the reference carries a watermark, do NOT reproduce it and do not produce any other logo,
+  handle or overlaid image.
+- Each cell is a finished frame of the same single shot, in the same style as the reference.
+
+---
+OPERATOR NOTES (after this line nothing is sent to the model)
+
+STATUS: HISTORICAL. Use prompts/orbit60-l2r-4x4.txt (the default) instead.
+
+This is the "lock-free" variant: the subject is required to DRIFT across the frame, possibly
+running off the frame edge, and the background is required to parallax. It is what produced
+the measured contrast recorded in SKILL.md hard rule 10 (same subject, same model, same
+angle: locked framing -> translation / area_cv 1.3% / total change 2.225, versus this variant
+-> pose-change / 5.1% / 3.315).
+
+It was accepted on g1.jpg, but the user has since decided that the DEFAULT behaviour is the
+opposite: THE SUBJECT STAYS IN THE MIDDLE OF THE FRAME and the travelling is done by the
+BACKGROUND (SKILL.md hard rule 17). The default template has been rewritten accordingly.
+
+Only fall back to this file when the subject is so large that holding it centred would make
+the sheet look dead - and say so to the user before spending points. It also lacks the
+SUBJECT section (hard rule 16) and the 180-style drift wording, so if you do use it, add the
+SUBJECT paragraph from the default template first.
+

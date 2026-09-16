@@ -11,6 +11,10 @@ import os
 import subprocess
 import sys
 
+# The image API rejects over-long prompts. Empirically: 6449 chars accepted (j1),
+# 9213 chars rejected with HTTP 400. Keep a margin below the proven-good size.
+MAX_PROMPT_CHARS = 6000
+
 
 def run(cmd, timeout=900):
     p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
@@ -34,6 +38,30 @@ def main():
     args = ap.parse_args()
 
     prompt = open(args.prompt_file, encoding="utf-8").read()
+
+    # Convention: everything from a line that is exactly "---" onwards is operator notes
+    # (TO OPERATOR / CHANGE LOG) and must NOT be sent to the model.
+    lines = prompt.splitlines()
+    for i, ln in enumerate(lines):
+        if ln.strip() == "---":
+            prompt = "\n".join(lines[:i])
+            sys.stderr.write(
+                "[apiz_image] stripped operator notes from line %d onwards\n" % (i + 1)
+            )
+            break
+    prompt = prompt.strip()
+
+    # Hard ceiling: the API rejects over-long prompts (HTTP 400 "prompt ... 1-4000 字符").
+    # Measured: 6.4k chars accepted, 9.2k rejected. Fail fast instead of burning a request.
+    n = len(prompt)
+    print("[apiz_image] prompt chars: %d" % n)
+    if n > MAX_PROMPT_CHARS:
+        raise SystemExit(
+            "[apiz_image] prompt is %d chars, over the safe ceiling of %d. "
+            "Trim it (and keep notes in a sibling .notes.md file)."
+            % (n, MAX_PROMPT_CHARS)
+        )
+
     params = {
         "quality": args.quality,
         "size": args.size,

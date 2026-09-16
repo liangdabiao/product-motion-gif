@@ -1,0 +1,80 @@
+TASK
+Turn the reference image into a 4x4 sprite sheet (16 cells, read left to right, top to
+bottom) of ONE continuous camera move that does two things at the same time: a horizontal
+camera orbit of exactly 60 degrees to the LEFT, and a steady move CLOSER (a dolly-in).
+The camera moves. The subject does not move.
+(For a right-hand orbit, swap "LEFT" for "RIGHT" and mirror the anchors in section 3.
+For a pull-back instead, replace "CLOSER / grows" with "FURTHER / shrinks"
+- and note that the push-in is the version with real impact.)
+
+REFERENCE
+<<< Replace this paragraph. Describe the subject in one dense paragraph: what it is, its
+colours and materials, every element that must survive into all 16 cells, and the
+background. Say "Same subject, same style, same colours, same brushwork in every cell."
+If the reference carries a watermark, name it here and forbid it in OUTPUT. >>>
+The background is flat, seamless, evenly lit <<< colour >>>, with only a soft contact
+shadow under the base.
+
+TWO MOTIONS, BOTH CONTINUOUS - this is the point of the sheet
+- ROTATION: the camera travels 60 degrees to the LEFT, divided into 15 equal steps of 4
+  degrees, one per cell.
+- DOLLY-IN: the camera also moves steadily CLOSER, so the subject appears progressively
+  LARGER. The apparent size grows by about 30% between cell 1 and cell 16, and it must grow
+  at an even rate: every step is the same amount bigger, and it NEVER shrinks at any step.
+- Both motions run at the same time and both are even. There is no acceleration, no pause,
+  no fast section and no slow section in either one.
+
+HOW TO MAKE BOTH MOTIONS VISIBLE - all three are REQUIRED
+1. The subject must DRIFT across the frame. Cell 1 places it one way; by cell 16 it sits in
+   a different position in the frame. Do NOT re-centre it from cell to cell and do NOT hold
+   the margins constant. Because the camera is moving closer, by cell 16 the bottom of the
+   subject may run off the frame edge - that is correct.
+2. <<< Name the one feature that proves the orbit. Pick something whose visible sweep must
+   change as the camera swings round - a spiral staircase, a ridge line, a far fin, a
+   second object that passes behind the first. Say: "The visible sweep of X must CHANGE:
+   parts hidden behind the subject in cell 1 come into view on the left as the camera
+   swings round." >>>
+3. Use these three anchors:
+   - Cell 1 is exactly the framing and viewpoint of the reference image: the whole subject,
+     comfortably inside the frame with background space around it.
+   - Cell 8 is about 28 degrees round and about 15% closer: the subject is clearly bigger,
+     its left face is opening toward the viewer.
+   - Cell 16 is exactly 60 degrees round and about 30% closer: the top of the subject now
+     dominates the upper frame, the left side faces us, the base is running toward the
+     bottom edge, and the right-hand face is now mostly hidden behind the subject.
+
+CAMERA
+- The camera arcs about the subject's vertical axis, always aimed at the subject, travelling
+  toward the LEFT, while closing in.
+- CONSTANT height and CONSTANT focal length. No zoom lens, no rise, no drop, no tilt, no
+  roll. Only two things change: the angle and the distance.
+- Cell 1 is 0 degrees at the reference distance. Cell 16 is exactly 60 degrees and about 30%
+  closer.
+- A straight bird's-eye view of the move would be a straight line toward the subject,
+  staying level, curving 60 degrees to the left.
+
+WHAT MUST NOT CHANGE
+- The subject is completely static. It does not rotate, not translate, not scale itself, and
+  its parts do not move. This is NOT a turntable spin of the subject.
+- The same elements in the same places in every cell. Never add or remove <<< the small
+  parts that must survive >>>.
+- Identical lighting, identical white balance and identical shadow direction in all 16
+  cells. No flicker, no colour drift, no brightness change.
+- The soft contact shadow stays under the subject and stays grounded.
+
+FRAMING
+- Cell 1 shows the whole subject with background margin around it; from there the subject
+  grows steadily until cell 16 is noticeably tighter. Consistent artistic framing, but
+  deliberately NOT a constant size.
+- Flat, clean, seamless background, with no shadow banding or darkening at the cell edges.
+
+OUTPUT
+- 4 columns, 4 rows, equal cells, no visible grid lines, no gaps between cells.
+- No borders, no frames, no text, no numbers, no watermarks, no captions, no logos.
+- Each cell is a finished frame of the same single shot, in the same style as the reference.
+
+NOTE TO THE OPERATOR
+Because this sheet deliberately changes scale, `area_cv` in the QA report will be large
+(i1.jpg measured 49.4%) and the verdict will read REVIEW. That is expected, not a defect -
+see hard rule 11. Judge the dolly by whether the area grows monotonically, and review the
+result with `scripts/ab_frames.py sheet.jpg out.png 1 16 4 4 460`.

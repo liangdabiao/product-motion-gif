@@ -1,0 +1,91 @@
+TASK
+Turn the reference image into a 4x4 sprite sheet (16 cells, read left to right, top to
+bottom) of ONE continuous camera move.
+- ACTION: <<< the one small thing that moves inside the scene, or "nothing - the camera is
+  the only thing that moves" >>>
+
+SUBJECT - the pivot the camera circles (name it before anything else)
+<<< One line naming ONE thing: "The SUBJECT is the <object>, which sits in the middle of the
+frame." If the image holds several objects, name the one that is unmistakably the hero. >>>
+- The camera orbits THIS SUBJECT and nothing else. Every angle is measured around its own
+  vertical axis: 0 degrees = the reference viewpoint, looking straight at it; 30 degrees
+  LEFT / RIGHT = the camera has walked round and stands 30 degrees to its left / right,
+  still looking straight at it.
+- It is the pivot, so it does not move, walk, float, spin or resize: its position in space
+  is fixed and its own parts stay rigid relative to each other.
+- Its pose may be frozen, but a frozen pose seen from a NEW angle is not the same picture.
+  The rotation has to be read off the SUBJECT itself.
+- Everything else is BACKGROUND, sitting behind it at a fixed distance.
+
+REFERENCE
+<<< 4-6 sentences, in the order a viewer notices it: what the subject is, its material and
+style, its colour, where each landmark sits, what the background is, what the ground is. Name
+every element that must survive all 16 cells. End with: Same model, same style, same colours,
+same construction in every cell. >>>
+The background is <<< flat, seamless, evenly lit white / the pure colour of the reference >>>,
+with only a soft contact shadow under the base.
+
+THE ONE THING THAT MATTERS MOST
+(a) Across the 16 cells the viewpoint must travel a REAL 60 degrees, and cell 1 and cell 16
+    must differ at a glance. A sheet in which the scene looks the same from every cell is a
+    FAILED sheet.
+(b) <<< the moving element must visibly change - a sheet in which it holds exactly the same
+    pose in every cell is also a FAILED sheet. Delete this clause if nothing moves. >>>
+
+HOW TO MAKE THE ORBIT VISIBLE - every clause below is REQUIRED
+1. FRAMING: the SUBJECT STAYS IN THE MIDDLE OF THE FRAME. The camera keeps aiming at it, so
+   it must not slide sideways and must not be re-framed from cell to cell. The travelling is
+   done by the BACKGROUND, sliding across the frame behind the SUBJECT.
+2. THE SUBJECT must read as seen from a new angle. Its silhouette and the placement of its
+   parts change from cell to cell WITHOUT its pose changing: a different side of the body
+   faces us, the shoulder line falls differently, the near side covers a different amount,
+   the edges of the form land in new places, and the parts nearest the camera swing faster
+   than the parts trailing away.
+   <<< If the background is a flat featureless field (pure colour, no props), this is the
+   ONLY thing carrying the rotation, so it is not optional. List 3-5 concrete parts: which
+   side of the body faces us, where the sash knot / seam / ribbon / cloak lands in cell 1
+   versus cell 16, how much the near shoulder covers, which part of the frame the ribbon
+   reaches. >>>
+3. BACKGROUND features, if there are any, must slide: near ones FASTER than far ones.
+   <<< name the elements closest to the camera >>>. Nothing may stay nailed to the same spot,
+   and the SUBJECT must never end up with the same slice of background behind it in every
+   cell.
+4. ANCHORS:
+   - Cell 1, 30 degrees LEFT: <<< what opens toward us, where the landmarks now sit >>>.
+   - Cell 8, 0 degrees: exactly the framing and viewpoint of the reference image.
+   - Cell 16, 30 degrees RIGHT: <<< what has swung toward the left, what is now hidden >>>.
+
+CAMERA
+- Horizontal arc about the SUBJECT's vertical axis, always aimed at the SUBJECT, travelling
+  toward the RIGHT.
+- CONSTANT distance, CONSTANT height, CONSTANT focal length: no dolly, no zoom, no rise, no
+  drop, no tilt, no roll. The apparent size varies by less than 5% across the sheet.
+- 15 equal steps of 4 degrees, one step per cell, even: no acceleration, no pause.
+- It is the CAMERA that orbits. The SUBJECT does not rotate on a turntable, does not turn to
+  face the camera, and never shows its back.
+
+THE <<< MOVING ELEMENT >>> - the only moving thing in the whole scene
+<<< Delete this whole section if nothing inside the scene moves. >>>
+- It <<< walks / turns its head / flaps / drifts >>>, travelling about <<< one and a half
+  times its own body length >>> in total from cell 1 to cell 16, evenly and unhurried.
+- <<< The readable mechanics - which parts alternate, what stays level, what faces which way -
+  so it cannot be faked with a single sliding shift. >>>
+- It stays <<< where it belongs >>>, at the same scale and colour as in the reference. It must
+  NOT <<< jump, climb, turn around, run, grow, shrink, leave the frame, disappear, or be
+  joined by a second one >>>.
+
+WHAT MUST NOT CHANGE - everything except <<< the moving element >>>
+- Every other object keeps the same shape, position and proportion in all 16 cells; never add
+  or remove an object, a brick, a branch or a prop.
+- Liquid and light do not move on their own: water does not ripple, foliage does not sway,
+  nothing bobs or drifts.
+- Identical lighting, white balance and shadow in all 16 cells: no flicker, no colour drift,
+  no brightness change, no banding or darkening at the cell edges. The soft contact shadow
+  stays under the base and stays grounded.
+
+OUTPUT
+- 4 columns, 4 rows, equal cells, no visible grid lines, no gaps between cells.
+- No borders, frames, text, numbers, watermarks, captions or logos.
+  <<< If the reference carries a watermark, name its position here and write: do NOT reproduce
+  it, and do not reproduce any other logo, handle or overlaid image. >>>
+- Each cell is a finished frame of the same single shot, in the style of the reference.
