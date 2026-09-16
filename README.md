@@ -24,6 +24,7 @@
 
 ## 二、怎么用（就三步）
 
+需要 GPT-Image 2.5 ，推荐注册得到api: https://apiz.ai/ ,
 直接在你的agent(codex/workbuddy等)安装好本skill,命令：
  product-motion-gif skill生成 gif,参考图2个 ： d1.webp，d2.webp 
 
