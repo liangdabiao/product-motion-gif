@@ -1,0 +1,67 @@
+TASK
+Turn the reference images into a 4x4 sprite sheet (16 cells, read left to right, top to
+bottom) describing ONE continuous camera move: a horizontal orbit of exactly 60 degrees
+around the building.
+
+TWO REFERENCES - READ BOTH
+- Image 1 (exterior) is the MAIN VIEW. It defines what the finished shot looks like: the
+  two-storey LEGO-style Chinese building with red-brown timber walls, grey tiled roof, the
+  large pink cherry-blossom tree on its right, the small river with a boat and a
+  fisher-minifigure at the bottom right, on a bright blue background.
+- Image 2 (cutaway) is the STRUCTURE REFERENCE ONLY. It shows the same LEGO-style
+  architecture opened up, revealing the interior floors, rooms, furniture, minifigures and
+  the grey tiled roofs. Use it only to get the building's real internal structure and
+  proportions right. Do NOT draw the cutaway, do NOT open up the walls, do NOT show the
+  interior in the final sheet.
+
+REFERENCE (what must appear in every cell)
+Keep the exact same building, the same cherry-blossom tree, the same river, the same boat
+and minifigures, in the same LEGO construction, the same colours and the same plastic
+materials as the references. This is one single static diorama, photographed from
+different angles - not a redesigned scene.
+
+CAMERA
+- The camera orbits the building on a horizontal arc about its vertical centre axis,
+  always aimed at the centre of the building.
+- CONSTANT distance, CONSTANT height and CONSTANT focal length. No dolly in or out, no
+  zoom, no rise, no drop, no tilt, no roll.
+- The camera stays on the FRONT side of the building for the whole move. It never passes
+  the side face and never goes behind the building.
+- Cell 1 is the straight-on frontal view (0 degrees): we look at the front facade straight
+  on, exactly as in Image 1.
+- Cell 16 is exactly 60 degrees away from the start: a mild three-quarter view that still
+  shows the front facade full and readable, with only a gentle glimpse of the right-hand
+  side wall and a little more of the cherry tree.
+- The 60 degrees is divided into 15 equal steps of 4 degrees, one step per cell.
+- The motion is perfectly even. Every step covers the same angle. There is no
+  acceleration, no pause, no fast section and no slow section anywhere in the sheet.
+
+WHAT MOVES AND WHAT DOES NOT
+- ONLY the camera moves. The building and everything in the scene is completely static: it
+  must not rotate, not translate, not scale, not change shape, not open up.
+- This is NOT a turntable spin of the model. Do not rotate the model itself.
+- As the camera orbits, the near cherry tree and river slide across the frame faster than
+  the far wall behind. That parallax is what sells the 3D orbit.
+
+CONSISTENCY (hard requirements)
+- The apparent size of the building changes by LESS THAN 5% across all 16 cells.
+- The base of the building and the ground line sit at exactly the same height in every
+  cell.
+- Identical lighting, identical white balance and identical shadow direction in all 16
+  cells. No flicker, no colour drift, no brightness change.
+- The same subjects appear in every cell. Never add or remove a building, a tree, a boat,
+  a lantern or a minifigure, and never move one to a new place in the world.
+- Same construction style as the references: LEGO bricks, clean plastic surfaces, same
+  colours.
+
+FRAMING
+- Every cell shows the whole diorama, complete and uncropped, with consistent framing and
+  consistent margins. The building never touches the edge of a cell.
+- Flat, clean, evenly lit bright-blue background around the diorama, matching the
+  reference background, seamless, with no banding and no darkening at the cell edges.
+
+OUTPUT
+- 4 columns, 4 rows, equal cells, no visible grid lines, no gaps between cells.
+- No borders, no frames, no text, no numbers, no watermarks, no captions.
+- Each cell is a finished frame of the same single shot, in the same style as the
+  reference images.

@@ -1,0 +1,51 @@
+TASK
+Turn the reference image into a 4x4 sprite sheet (16 cells, read left to right, top to
+bottom) describing ONE continuous camera move: a horizontal orbit of exactly 60 degrees
+around the scene.
+
+REFERENCE
+The reference is a LEGO-style Chinese gate-tower scene on a pure white background: a stone
+gate tower with red doors in the middle, flanked by grey tiled-roof buildings, two
+minifigures, a large green tree, a golden tree and a horse. Keep every one of these
+elements, in the same style, colours and materials, in every cell.
+
+CAMERA
+- The camera orbits the scene on a horizontal arc about the scene's vertical centre axis,
+  always aimed at the centre of the scene.
+- CONSTANT distance, CONSTANT height and CONSTANT focal length. No dolly in or out, no
+  zoom, no rise, no drop, no tilt, no roll.
+- Cell 1 is the straight-on frontal view (0 degrees).
+- Cell 16 is exactly 60 degrees from the start: a three-quarter view that shows the front
+  and the right-hand side of the gate tower.
+- The 60 degrees is divided into 15 equal steps of 4 degrees, one step per cell.
+- The motion is perfectly even. Every step covers the same angle. There is no
+  acceleration, no pause, no fast section and no slow section anywhere in the sheet.
+
+WHAT MOVES AND WHAT DOES NOT
+- ONLY the camera moves. The scene itself is completely static: it must not rotate, not
+  translate, not scale, not change shape.
+- This is NOT a turntable spin of the model. Do not rotate the model itself.
+- As the camera orbits, near objects slide across the frame faster than far objects. That
+  parallax is what sells the 3D orbit.
+
+CONSISTENCY (hard requirements)
+- The apparent size of the scene changes by LESS THAN 5% across all 16 cells.
+- The ground line and the base of the scene sit at exactly the same height in every cell.
+- Identical lighting, identical white balance and identical shadow direction in all 16
+  cells. No flicker, no colour drift, no brightness change.
+- The same subjects appear in every cell. Never add or remove a building, a tree, a figure
+  or the horse, and never move one to a new place in the world.
+- Same construction style as the reference: LEGO bricks, clean plastic surfaces, same
+  colours.
+
+FRAMING
+- Every cell shows the whole scene, complete and uncropped, with consistent framing and
+  consistent margins.
+- Flat, clean, pure white background around the scene, seamless, with no shadow banding or
+  darkening at the cell edges.
+
+OUTPUT
+- 4 columns, 4 rows, equal cells, no visible grid lines, no gaps between cells.
+- No borders, no frames, no text, no numbers, no watermarks, no captions.
+- Each cell is a finished frame of the same single shot, in the same style as the
+  reference image.

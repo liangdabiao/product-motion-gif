@@ -1,0 +1,21 @@
+Create ONE single image arranged as a 4x4 grid of 16 equal square panels, to be read left-to-right, top-to-bottom. It is a stop-motion turntable sequence of the reference image.
+
+CONTENT
+- Every panel shows the exact same LEGO-style scene from the reference photo: the grey brick gatehouse with its dark layered pagoda roof, the two minifigures (one in red robes, one in blue robes), the green tree, the orange horse.
+- The scene must be IDENTICAL in all 16 panels: same model, same colour of every brick, same two figures, same tree shape and foliage, same horse pose, same scale, same soft contact shadow on the ground. Only the camera angle changes.
+
+CAMERA
+- The camera orbits horizontally around the centre of the scene at a fixed distance, a fixed height (low eye level, just above the base of the model) and a fixed focal length. No zoom in or out anywhere.
+- The orbit is exactly 180 degrees across the whole grid, divided into 15 equal steps of 12 degrees: panel 1 = 0 degrees, panel 2 = 12, panel 3 = 24, ... panel 16 = 180 degrees.
+- Because it is the CAMERA that orbits, the model itself never turns. The ground plane stays level and horizontal in every panel.
+- The view sweeps smoothly from panel 1 (straight-on front elevation) through the right-hand three-quarter view, the right side profile, the rear three-quarter view, and finishes at panel 16 (straight-on rear elevation, exactly 180 degrees around).
+- The rear view must be the SAME building seen from behind: the same roof structure, the same stone texture and proportions, the same gate arch on its front face, not a different or invented building. Keep the two figures, the tree and the horse in their same relative positions around the model throughout.
+- The light source stays fixed to the scene, so the shading shifts naturally as the camera moves. There must be no popping or angle jump between neighbouring panels.
+
+LAYOUT
+- Pure seamless white background in every panel. No gradient, no floor line, no horizon, no walls, no added props.
+- The whole scene, including the top of the roof and the top of the tree, must sit fully inside each panel with a comfortable margin on all four sides. Nothing may be cropped, and no part of the model may touch or cross a panel edge.
+- No panel borders, no divider lines, no frame numbers, no labels, no text, no watermark.
+
+STYLE
+- Photorealistic studio product render, sharp focus, clean soft light, high consistency across all 16 panels. Treat it as 16 stills from one single continuous turntable shoot.

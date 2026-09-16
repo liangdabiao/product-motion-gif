@@ -1,0 +1,38 @@
+GENERATE ONE 4x4 CONTACT SHEET HOLDING 16 SEQUENTIAL FRAMES OF A SINGLE CAMERA MOVE.
+Reading order: left to right, top to bottom. Cell 1 = top-left, cell 16 = bottom-right.
+
+SCENE
+The LEGO-style Chinese village street from the reference image, unchanged.
+
+THE MOVE - ONE UNINTERRUPTED ORBIT THAT PULLS BACK
+The camera orbits the scene through 180 degrees while steadily retreating from it.
+
+The 16 cells are 16 EQUAL TIME SAMPLES of one continuous, constant-velocity move. Treat it
+as a straight linear interpolation: cell 1 is the start, cell 16 is the end, and every cell
+in between sits exactly at its proportional position along that single interpolation.
+
+* Between EVERY pair of neighbouring cells the change is IDENTICAL - the same number of
+  degrees of orbit and the same increase in distance. No step may be larger than another.
+* There is NO acceleration, NO pause, NO fast section and NO slow section anywhere between
+  cell 1 and cell 16. The framing must not stall in the middle and then lurch.
+
+* Cell 1 : the camera is close in, tightly framing the stone archway and the trees.
+* Cell 16: the camera has swung round to directly behind the archway, far enough back that
+  the whole street - far houses through to near ones - fits inside the frame.
+* Cell 16 flows smoothly back into cell 1, so the 16 cells play as one seamless loop.
+
+CAMERA RULES - these override every other consideration
+* Fixed lens, fixed camera height, fixed horizon. The lens never zooms on its own; the only
+  distance change comes from the steady retreat.
+* Film-grade stability. No shake, no bounce, no tilt, no roll, no sudden jump, no stutter.
+  Picture a motorised motion-control rig running on perfectly smooth rails.
+* The framing inside each cell changes at a CONSTANT rate from cell 1 through cell 16.
+* The subject never leaves the cell - keep a small margin on all four sides of every cell.
+
+SCENE RULES
+* Every building, terrace, archway, tree, horse and figure keeps EXACTLY its shape, size and
+  colour, and keeps exactly its position relative to the other objects. Only the viewpoint changes.
+* Nothing appears, disappears, shifts, morphs or changes colour from cell to cell.
+* Identical lighting, exposure and colour balance in all 16 cells.
+
+NO text, no captions, no numbers, no watermark, no border, no grid lines.
