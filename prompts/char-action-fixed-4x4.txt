@@ -1,0 +1,93 @@
+TASK
+Build a 4x4 sprite sheet (16 cells, read left to right, top to bottom) showing ONE unbroken
+character action. Everything is DRAWN FROM SCRATCH - there is no reference image, and nothing
+here is a modification of an existing picture.
+- STYLE: <<< the art direction, as a look a renderer can hit: "high-fidelity 3D game render,
+  cinematic Chinese-fantasy art direction, PBR materials, warm key light and soft rim light" /
+  "flat cel-shaded mobile-game chibi" / "16-bit pixel-art game sprite" >>>
+- CHARACTER: <<< one short line naming the single figure, e.g. "one figure only - a monk with a
+  ringed staff" >>>
+- ACTION: <<< what that figure does across the 16 cells, in one sentence >>>
+
+CHARACTER - the one and only figure (named before anything else)
+<<< 3-5 lines locked down the way a character sheet does it. Cover, in this order:
+    1. who/what it is, age, build, face, and every worn item (headwear, garment, footwear,
+       ornament) with its colour and material - name the pieces, do not say "traditional
+       clothes";
+    2. which way it faces and from what angle it is shot (e.g. "faces to the RIGHT, seen in
+       three-quarter front view from slightly below eye level");
+    3. any prop it carries, described as a RIGID object with an exact count of its distinctive
+       features ("a staff whose finial carries exactly nine rings") and a list of what the prop
+       never does (never changes length, never bends, never loses a ring, never swapped for
+       another weapon);
+    4. the population line: "Exactly two arms, two hands and one <prop>. No helper, no monster,
+       no second figure, no animal, no audience - nothing else in the picture is alive." >>>
+
+LOOK
+- Background: <<< a flat, seamless, evenly lit <colour> field. No scenery, no props, no horizon
+  line, no banding, no texture. >>> For a game asset a single flat colour is the safest choice;
+  a busy environment is where identity drift and jitter come from.
+- A soft contact shadow sits on the ground under the feet and stays grounded.
+- The only glow is <<< the character's own effect and its fixed hue >>>. It never becomes fire,
+  lightning, smoke or a rainbow, and its hue stays the same in every cell.
+- Identical camera angle, background, lighting and white balance in all 16 cells.
+
+THE ACTION - one continuous motion, 16 equal samples
+- The 16 cells are 16 equal-time samples of ONE single unbroken motion. Every cell is a
+  different instant of the same action: no cell repeats another, no pose is held across two
+  cells, the motion never reverses, and the amount of change between neighbouring cells stays
+  as even as the action physically allows.
+- The motion: <<< one sentence, start pose -> the main beat -> the recovery. Describe it as ONE
+  arc, never as "cells 1-4 do A, cells 5-9 do B" - staged lists make the model jump at the
+  phase boundary (hard rule 5). >>>
+- ANCHORS (milestones, not stages - each one is just a cell you can describe in words):
+  - Cell 1: <<< the opening pose, e.g. "ready stance, <prop> planted upright beside him, no
+    glow, both feet on the ground" >>>
+  - Cell 8: <<< roughly the midpoint, e.g. "<prop> head lifted high beside the shoulder, the
+    light forming at the finial, robe hem starting to lift" >>>
+  - Cell 16: <<< the closing pose. THIS IS THE LOOP SEAM: end it almost back at the cell-1
+    stance with the effect faded to an afterglow, so a plain cycle loop reads seamless. >>>
+- Only the effect may grow: <<< how it appears, swells, and fades >>>. Its shape may change
+  freely; nothing else in the picture may.
+
+CAMERA - LOCKED
+- The camera does NOT move at all: no orbit, no turn, no zoom, no dolly, no pan, no tilt, no
+  roll. Fixed distance, fixed height, fixed focal length, fixed background - the same framing
+  in all 16 cells.
+- The character stays in the middle of the frame at the SAME scale and the same distance from
+  the camera in every cell. It is never re-framed, never slides sideways across the frame, and
+  never grows or shrinks.
+<<< Note for the operator: this is the exact opposite of the orbit60 templates. There the
+camera travels and the background slides (hard rule 17); here the camera is nailed down and the
+character does all the moving. Do not copy the "background must slide" language into this file.
+>>>
+- The camera is not circling the character and the character is not rotating to face the camera.
+  The only things moving are the character and the effect it releases.
+
+WHAT MUST NOT CHANGE
+- Face, headwear, garment pattern and colours, ornaments, prop, body proportions and identity
+  are identical in all 16 cells. The character never changes costume and never becomes a
+  different person.
+- The prop stays the same object: same colour, same counted features, same total length, held
+  the same way, and it stays attached to the hand rather than floating free.
+- No extra limbs, no third hand, no duplicate of the character, no second prop.
+- It does not walk, jump, crouch to the floor, turn its back or leave the frame; the feet stay
+  on the ground, near the same spot, and the weight may only shift.
+- Lighting, background colour and shadow never flicker, drift or change brightness between
+  cells.
+
+FAILURE
+(a) A sheet in which the character holds the same pose and the prop the same angle in all 16
+    cells is a FAILED sheet.
+(b) A sheet in which the face, costume, prop or proportions differ from cell to cell is also a
+    FAILED sheet.
+
+OUTPUT
+- 4 columns, 4 rows, equal cells, no visible grid lines and no gaps between cells.
+- No borders, frames, panels, text, numbers, captions, watermarks or logos.
+- Each cell is a finished frame of the same single shot; the whole figure and the whole effect
+  fit inside their cell with a small even margin and are not cut off by the cell edge.
+
+---
+Operator notes - fill-in guide and gotchas live in char-action-fixed-4x4.notes.md.
+Everything below this line is stripped by apiz_image.py and never sent to the model.
